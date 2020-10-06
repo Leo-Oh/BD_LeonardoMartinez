@@ -1,0 +1,73 @@
+\documentclass[10pt]{article}         %% What type of document you're writing.
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage[dvipsnames]{xcolor}
+
+%%%%% Preamble
+
+%% Packages to use
+
+\usepackage{amsmath,amsfonts,amssymb}   %% AMS mathematics macros
+
+%% Title Information.
+
+\title{Data Model}
+\author{Leonardo Martinez}
+%% \date{29 sep 2020}           %% By default, LaTeX uses the current date
+
+%%%%% The Document
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+This document implements the Data Model.
+\end{abstract}
+
+\section{Data Model Desciption}
+
+\begin{enumerate}
+
+\item
+The company is organized into departmen.\\
+Each deparment has a unique \textcolor{green}{name}, a unique \textcolor{green}{number}\\
+and a particular employee who \textcolor{yellow}{manages} the department.
+we keep track of the \textcolor{green}{start date}when that employee began mangin the deparment\\
+A deparment may have several \textcolor{green}{locations}
+
+\item
+A deparment \textcolor{yellow}{controls} a number of projects, each of whicj has a unique \textcolor{green}{name}, a unique \textcolor{green}{number}, and a single \textcolor{green}{locations}
+
+\item
+The database will store each employee’s \textcolor{green}{name},\textcolor{green}{Social Security number},\textcolor{green}{
+address}, \textcolor{green}{salary}, \textcolor{green}{sex (gender)}, and \textcolor{green}{birth date}. 
+\\
+An employee \textcolor{yellow}{is assigned} to one
+department, but may \textcolor{green}{work} on several projects, which are not necessarily
+controlled by the same department. It is required to keep track of the cur-
+rent \textcolor{green}{number of hours per week} that an employee works on each project
+\\
+***as well as the direct \textcolor{yellow}{supervisor} of each employee (who is another employee)***.
+
+\end{enumerate}
+
+
+\section{E-R Model}
+
+Data Model ...
+\begin{figure}[h]
+     \includegraphics[scale=0.4]{datamodel}
+     \caption{data model E-R Model}
+\end{figure}
+
+\section{Relational Model}
+Data Model  Relational Model
+
+ \begin{figure}[h]
+     \includegraphics[scale=0.4]{datamodel2}
+     \caption{data model Relation Model}
+\end{figure}
+
+
+\end{document}
