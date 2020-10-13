@@ -1,0 +1,70 @@
+\documentclass[10pt]{article}         %% What type of document you're writing.
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage[dvipsnames]{xcolor}
+
+%%%%% Preamble
+
+%% Packages to use
+
+\usepackage{amsmath,amsfonts,amssymb}   %% AMS mathematics macros
+
+%% Title Information.
+
+\title{Twitter Data Model}
+\author{Leonardo Martinez}
+%% \date{29 sep 2020}           %% By default, LaTeX uses the current date
+
+%%%%% The Document
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+This document implements the Twitter Data Model.
+\end{abstract}
+
+\section{Data Model Desciption}
+
+
+\textcolor{red}{Usuarios} de twitter ( \textcolor{green}{idusuario,usuario,email,telefono,nombre} )\\
+
+\textcolor{red}{tweets} ( \textcolor{green}{tweet,urlimagen} )\\
+
+un usuario \textcolor{yellow}{escribe} tweets
+
+\section{E-R Model}
+
+Twitter ...
+\begin{figure}[h]
+     \includegraphics[scale=0.5]{twitter_model}
+     \caption{Twitter E-R Model}
+\end{figure}
+
+\section{Build Database in postgresql}
+\begin{enumerate}
+	\item
+	ssh -i leonardodmm leonardodmm@104.198.244.0
+	\item
+	sudo -u postgres createdb leonardodmm\_twitter;
+	\item
+	sudo -postgres psql;
+	\item
+	\textbackslash list;
+	\item
+	connect leonardodmm\_twitter
+	\item
+	\textbackslash dt;
+	\item
+	create table usuarios(idUsuario varchar(50),usuario varchar(20),\\email varchar(40),passwd varchar(8),telefono varchar(10),nombres varchar(20), apellidoPat varchar(20), apellidoMat varchar (20));
+	\item
+	select * from usuarios;
+	\item
+	alter table usuarios add constraint pk\_idusuario primary key (idusuario);
+	\item
+	insert into usuarios values('1','leonardo','leonardo.m2349@gmail.com','qwerty','2711426743',\\'leonardo',',montiel','martinez');
+	
+\end{enumerate}
+
+\end{document}
