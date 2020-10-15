@@ -1,0 +1,64 @@
+\documentclass[10pt]{article}         %% What type of document you're writing.
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage[dvipsnames]{xcolor}
+
+%%%%% Preamble
+
+%% Packages to use
+
+\usepackage{amsmath,amsfonts,amssymb}   %% AMS mathematics macros
+
+%% Title Information.
+
+\title{University Case Data Model}
+\author{Leonardo Martinez}
+%% \date{29 sep 2020}           %% By default, LaTeX uses the current date
+
+%%%%% The Document
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+This document implements the University Case Data Model.
+\end{abstract}
+
+\section{Data Model Desciption}
+
+
+\textcolor{red}{Alumnos} con ( \textcolor{green}{matricula, nombre, direccion, carrera [sistemas, nanotecnologia, fisico nuclear, matematicas, biotecnologia]} )\\
+
+\textcolor{red}{Materias} con ( \textcolor{green}{codigo, nombre, creditos} )\\
+
+\textcolor{red}{Profesores } con ( \textcolor{green}{nomina, nombre completo, grado\_estudios [lic, maestria, doctorado, postdoctorado]} )\\
+
+
+
+Los alumnos pueden \textcolor{yellow}{tomar} n materias, y 
+\\
+una materia es \textcolor{yellow}{tomada} por n alumnos, es importante guardar el semestre [1, 2, 3, 4,5, 6, 7, 8] y la calificacion en esta relacion
+\\
+Los profesores \textcolor{yellow}{imparten} n materias y una materia tambien puede ser \textcolor{yellow}{impartida} por n profesores
+
+
+
+\section{E-R Model}
+
+University Case ...
+\begin{figure}[h]
+     \includegraphics[scale=0.3]{er_university.png}
+     \caption{University Case E-R Model}
+\end{figure}
+
+\section{Relation Model}
+
+University Case ...
+\begin{figure}[h]
+     \includegraphics[scale=0.3]{relation.png}
+     \caption{University Relation Model}
+\end{figure}
+
+
+\end{document}
