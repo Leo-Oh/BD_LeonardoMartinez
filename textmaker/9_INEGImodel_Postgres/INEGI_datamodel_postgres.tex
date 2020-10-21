@@ -1,0 +1,112 @@
+\documentclass[10pt]{article}         %% What type of document you're writing.
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage[dvipsnames]{xcolor}
+
+%%%%% Preamble
+
+%% Packages to use
+
+\usepackage{amsmath,amsfonts,amssymb}   %% AMS mathematics macros
+
+%% Title Information.
+
+\title{INEGI Data Model}
+\author{Leonardo Martinez}
+%% \date{1 octubre 2020}           %% By default, LaTeX uses the current date
+
+%%%%% The Document
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+This document implements the INEGI Data Model.
+\end{abstract}
+
+\section{Data Model Desciption}
+
+
+\textcolor{red}{Entidades} de mexico ( \textcolor{green}{idEntidad,nombreEntidad} )\\
+\textcolor{red}{Municipios} (\textcolor{green}{idMunicipio,nombreMunicipio})\\
+\textcolor{red}{Empresa} (\textcolor{green}{idEmpres,nombreEmpresa,domicilio,tipoActividad [hospital, escuela, oxxo, gobierno, cajero...], latitud, longitud})\\
+
+\begin{enumerate}
+\item
+Las Entidades se \textcolor{yellow}{componen} de Municipios \\
+\item
+Los Municipios \textcolor{yellow}{tienen} Empresas\\
+\end{enumerate}
+
+
+\section{E-R Model}
+
+INEGI...
+
+\begin{figure}[b]
+     \includegraphics[scale=0.6]{er_INEGI_model}
+     \caption{INEGI E-R Model}
+\end{figure}
+   
+\section{Relational Model}
+INEGI Relational Model
+
+\begin{figure}[b]
+     \includegraphics[scale=0.4]{relational_Inegi_model2}
+     \caption{INEGI Relational Model}
+\end{figure}
+
+\section{Steps}
+\begin{enumerate}
+
+\item
+	sudo -u postgres createdb leonardodmm\_inegi;
+\item
+	sudo -u postgres psql;
+\item
+	\textbackslash connect leonardodmm\_inegi;
+\item
+	create table entidades(identidad int,nombreentidad varchar(200));
+\item
+	alter table entidades add constraint pk\_identidad primary key(identidad);
+\item
+	insert into entidades values (1,'AGUASCALIENTES');\\
+	insert into entidades values (2,'BAJA CALIFORNIA');\\
+	insert into entidades values (2,'BAJA CALIFORNIA SUR');
+\item
+	create table municipios(idmunicipios int,identidad int, nombremunicipio varchar(200));
+\item
+	alter table municipios add constraint pk\_identidad\_idmunicipio primary key(identidad,idmunicipio);
+\item
+	alter table municipios add constraint fk\_identidad foreign key(identidad) references entidades(identidad);
+\item
+	insert into municipios values(1,1 'EL LLANO');
+	insert into municipios values(1,2 'TIJUANA');
+	insert into municipios values(2,2 'MEXICALI');
+\item
+	create table tipoactividad(codigoactividad int,descripcion varchar (200));
+\item
+	alter table tipoactividad add contraint pk\_codigoactividad primary key(codigoactividad);
+\item	
+	 insert into tipoactividad values(522110.'BANCA MULTIPLE');\\
+	 insert into tipoactividad values(522451.'MONTEPIOS');
+\item
+	create table empresas(idempresa int,identidad int,idmunicipio int,codigoactividad int,nombreempresa varchar(200),latitud float,longitud float,calle varchar(100),numero int,colonia varchar(100),codigopostal int,ciudad varchar(100),estado varchar(50),pais varchar(50));
+\item
+	alter table empresa add constraint pk\_id\_empresa\_identidad\_idmunicipio primary key(idempresa, identidad,idmunicipio);
+\item
+	alter table empresas add constraint pk\_id\_empresa\_identidad\_idmunicipio doreign key(identidad,idmunicipio) references municipios(identidad, idmunicipio);
+\item
+alter table empresas add constraint fk\_codigoactividad foreign key(codigoactividad) references tipoactividad(codigoactividad);
+\item
+insert into empresas values (1, 1, 1, 522110,'SUCURSAL BANAMEX 1',21.88234,-102.28259,'AV 1',1,'CENTRO',98800,'AGUASCALIENTES','AGS','MEXICO');
+\\
+insert into empresas values (3, 1, 1, 522451,'BANCOMER 1',21.88255,-102.28259,'AV 1',1,'CENTRO',98800,'AGUASCALIENTES','AGS','MEXICO');
+
+
+	
+\end{enumerate}
+
+\end{document}
+
