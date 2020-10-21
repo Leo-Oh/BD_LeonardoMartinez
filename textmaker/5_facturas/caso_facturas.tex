@@ -1,0 +1,52 @@
+\documentclass[10pt]{article}         %% What type of document you're writing.
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage[dvipsnames]{xcolor}
+
+%%%%% Preamble
+
+%% Packages to use
+
+\usepackage{amsmath,amsfonts,amssymb}   %% AMS mathematics macros
+
+%% Title Information.
+
+\title{CASO FACTURAS Data Model}
+\author{Leonardo Martinez}
+%% \date{29 sep 2020}           %% By default, LaTeX uses the current date
+
+%%%%% The Document
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+This document implements the CASO FACTURAS Data Model.
+\end{abstract}
+
+\section{Data Model Desciption}
+
+
+\textcolor{red}{Cliente} de CASO FACTURAS ( \textcolor{green}{ rfc, nombre y direccion} )\\
+
+\textcolor{red}{facturas} ( \textcolor{green}{folio, fecha, concepto, subtotal, iva y total} )\\
+
+un cliente  \textcolor{yellow}{solicita n} facturas
+
+\section{E-R Model}
+
+CASO FACTURAS ...
+\begin{figure}[h]
+     \includegraphics[scale=0.5]{casoFacturas.png}
+     \caption{CASO FACTURAS E-R Model}
+\end{figure}
+
+
+
+\begin{figure}[h]
+     \includegraphics[scale=0.5]{casoFacturasRelation.png}
+     \caption{CASO FACTURAS Relation}
+\end{figure}
+
+\end{document}
