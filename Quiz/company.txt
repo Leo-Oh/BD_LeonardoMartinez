@@ -1,0 +1,158 @@
+COMPANY quiz
+
+1.- create database  leonardodmm_empresa;
+Sql:
+    a. sudo ssh -i leonardodmm leonardodmm@104.198.244.0
+    b. sudo -u postgres createdb leonardodmm_empresa
+    c. \connect leonardodmm empresa;
+    d. create table employee (ssn int, bdate varchar(80),fname varchar(80),minit
+    varchar,lname varchar(80),salary float,sex varchar(15),depnumber int,super ssn
+    int);
+    e. alter table employee add constraint pk ssn primary key (ssn);
+    f. alter table employee add constraint fk super ssn foreign key(super ssn)
+    references employee(ssn);
+    g. create table dependent (dependt name varchar(100),sex varchar(15),bdate
+    varchar(80),relationship varchar,essn int);
+    h. alter table dependent add constraint fk essn foreign key(essn) references
+    employee(ssn);
+    i. create table department (number int,name varchar(120),mgr ssn int,dnumber
+    int);
+    j. alter table department add constraint pk number primary key(number);
+    k. alter table department add constraint fk mgr ssn foreign key(mgr ssn) references employee(ssn);
+    l. create table dept locations(dnumber int,location varchar);
+    m. alter table dept locations add constraint pk dnumber primary key(dnumber);
+    n. alter table department add constraint fk dnumber foreign key(dnumber)
+    references dept locations(dnumber);
+    ñ. create table works on(ssn int,pnumber int,hours varchar(100));
+    o. alter table works on add constraint fk ssn foreign key(ssn) references employee(ssn);
+    p. create table project(pnumber int,pname varchar(200),plocation varchar,dnumber
+    int);
+    q. alter table project add constraint pk pnumber primary key(pnumber);
+    r. alter table works on add constraint fk pnumber foreign key(pnumber) references project(pnumber);
+    s. alter table project add constraint fk dnumber foreign key(dnumber) references department(number);
+    t. alter table employee add constraint fk depnumber foreign key(depnumber)
+    references department(number);
+
+2.- insert 5 locations
+Sql:
+    insert into dept_locations values(1,'ORIZABA, VER');
+    insert into dept_locations values(2,'CORDOBA, VER');
+    insert into dept_locations values(3,'FORTIN, VER');
+    insert into dept_locations values(4,'AMATLAN, VER');
+    insert into dept_locations values(5,'IXTACZOQUITLAN, VER');
+    
+3.- insert 3 departaments
+Sql:
+    insert into department values (1,'DEPARTAMENTO PRIMER NOMBRE',null,1);
+    insert into department values (2,'DEPARTAMENTO SEGUNDO NOMBRE',null,1);
+    insert into department values (3,'DEPARTAMENTO TERCER NOMBRE',null,1);
+    
+    ======== Agregué un cuarto en una localizacion diferente ======= 
+    
+    insert into department values (4,'DEPARTAMENTO DE CORDOBA',null,2);
+    
+4.- insert 5 employees
+Sql:
+    insert into employee values(1,'7/09/2000','LEONARDO DANIEL','SR','MONTIEL MARTINEZ',40000.50,'MASCULINO',1,1);
+    insert into employee values (2,'1/07/1977','MARIA ESTHER','SRA','MARTINEZ REYES',30500,'FEMENINO',1,1);
+    insert into employee values (3,'21/04/1996','ROBERTO CARLOS','SR','MONTIEL MARTINEZ',25600.80,'MASCULINO',1,1);
+    insert into employee values (4,'28/09/1965','JOSE WENCESLAO','SR','ALVARADO LOPEZ',33250.90,'MASCULINO',1,1);
+    
+    insert into employee values (5,'4/10/2001','AMANDA','SRA','RAMIREZ GARCIA',33590.80,'FEMENINO',2,1);
+    
+5.- insert 5 projects
+Sql:
+    
+    insert into project values (1,'WEB SITE','ORIZABA, VER',1);
+    insert into project values (2,'API CONECTION','CORDOBA, VER',4);
+    insert into project values (3,'SERVER CREATION','ORIZABA, VER',1)
+    insert into project values (4,'NEURAL LINK','ORIZABA, VER',2);
+    insert into project values (5,'DRIVERS WIRELESS USB ','ORIZABA, VER',3);
+    
+6.- insert employees works_on projects (10 records)
+Sql:
+    
+    insert into works_on values (1,1,'2 Hrs');
+    insert into works_on values (1,4,'2:30 Hrs');
+    insert into works_on values (1,5,'2:30 Hrs');
+    insert into works_on values (2,3,'5 Hrs');
+    insert into works_on values (2,2,'3 Hrs');
+    insert into works_on values (3,5,'4:30 Hrs');
+    insert into works_on values (3,3,'3:30 Hrs');
+    insert into works_on values (4,4,'3 Hrs');
+    insert into works_on values (4,1,'5 Hrs');
+    insert into works_on values (5,2,'8 Hrs');
+
+    
+7.- insert 5 dependents 
+Sql:
+    
+    insert into dependent values ('JUAN','MASCULINO','5/03/2008','HIJO',1);
+    insert into dependent values ('PEDRO','MASCULINO','15/07/2005','HIJO',2);
+    insert into dependent values ('MARCOS','MASCULINO','18/07/2003','HIJO',3);
+    insert into dependent values ('LUZ','FEMENINO','6/12/2015','HIJO',4);
+    insert into dependent values ('Anell','FEMENINO','27/04/2017','HIJO',5);
+    
+Querys
+
+8.- name, lastname of employees
+Sql:
+    select fname as NAME,lname as FULLNAME from employee ;
+
+9.- number of departments
+Sql:
+    select  number ,count(*) from department group by number;
+    
+10.- average of salary in employees
+Sql:
+
+    select avg(salary) from employee;
+
+
+11.- min salary in employees
+Sql:
+    select min(salary) from employee;
+
+12.- max salary in employees
+Sql:
+    select max(salary) from employee;
+
+13.- name of employee, name of department where is assigned
+Sql:
+    select e.fname, e.lname,d.name from employee as e join department as d on e.depnumber = d.number;
+
+14.- name of employee, name of dependents and relationship
+Sql:
+    select e.fname, e.lname,d.dependt_name,d.relationship from employee as e join dependent as d on e.ssn = d.essn;
+    
+15.- name of departament, name of locations
+Sql:
+    select dp.name, dl.location from department as dp join dept_locations as dl on dp.dnumber = dl.dnumber;
+    
+16.- number of employees by departament
+Sql:
+	select depnumber, count(*) from employee group by depnumber;
+
+17.- number of employees by project
+Sql:
+	select pnumber, count(*) from works_on group by pnumber;
+
+18.- number of departments by locations 
+Sql:
+	select dnumber, count(*) from department group by dnumber;
+	
+19.- number of employees group by sex
+Sql:
+	
+	select sex, count(*) from employee group by sex;
+
+20.- name of employees, department name (only if name start with 'A')
+Sql:
+	select e.fname, e.lname,d.name from employee as e join department as d on e.depnumber = d.number where e.fname like 'A%';
+
+
+
+
+
+
+
