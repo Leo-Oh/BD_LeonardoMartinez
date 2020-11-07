@@ -1,0 +1,212 @@
+INEGI quiz
+
+
+Diagrama:
+
+https://github.com/adsoftsito/database2020/blob/master/w3/relational_inegi.png
+
+
+1.- create database <user>_inegi
+Sql:
+    sudo -u postgres createdb leonardodmm_inegi;
+    sudo -u postgres psql;
+    \connect leonardodmm inegi;
+    create table entidades(identidad int,nombreentidad varchar(200));
+    alter table entidades add constraint pk identidad primary key(identidad);
+    create table municipios(idmunicipios int,identidad int, nombremunicipio
+    varchar(200));
+    alter table municipios add constraint pk identidad idmunicipio primary
+    key(identidad,idmunicipio);
+    alter table municipios add constraint fk identidad foreign key(identidad)
+    references entidades(identidad);
+  
+    create table tipoactividad(codigoactividad int,descripcion varchar (200));
+    alter table tipoactividad add contraint pk codigoactividad primary key(codigoactividad);
+    create table empresas(idempresa int,identidad int,idmunicipio int,codigoactividad
+    int,nombreempresa varchar(200),latitud float,longitud float,calle varchar(100),numero
+    int,colonia varchar(100),codigopostal int,ciudad varchar(100),estado var-
+    char(50),pais varchar(50));
+    
+    alter table empresa add constraint pk id empresa identidad idmunicipio
+    primary key(idempresa, identidad,idmunicipio);
+    alter table empresas add constraint pk id empresa identidad idmunicipio
+    doreign key(identidad,idmunicipio) references municipios(identidad, idmu-
+    nicipio);
+    alter table empresas add constraint fk codigoactividad foreign key(codigoactividad)
+    references tipoactividad(codigoactividad);
+
+2.- insert 5 entidades
+Sql:
+	nsert into entidades values (5,'COAHUILA DE ZARAGOZA');
+	sert into entidades values (16,'MICHOACAN DE OCAMPO');
+	insert into entidades values (29,'TLAXCALA');
+	insert into entidades values (13,'HIDALGO');
+	insert into entidades values (18,'NAYARIT');
+	insert into entidades values (2,'BAJA CALIFORNIA');
+	insert into entidades values (28,'TAMAULIPAS');
+	insert into entidades values (14,'JALISCO');
+	insert into entidades values (25,'SINALOA');
+	insert into entidades values (23,'QUINTANA ROO');
+	insert into entidades values (24,'SAN LUIS POTOSI');
+	insert into entidades values (31,'YUCATÁN');
+	insert into entidades values (19,'NUEVO LEÓN');
+	insert into entidades values (9,'CIUDAD DE MÉXICO');
+	insert into entidades values (27,'TABASCO');
+	insert into entidades values (17,'MORELOS');
+	insert into entidades values (15,'MÉXICO');
+	insert into entidades values (12,'GUERRERO');
+	insert into entidades values (20,'OAXACA');
+	insert into entidades values (6,'COLIMA');
+	insert into entidades values (30,'VERACRUZ DE IGNACIO DE LA LLAVE')
+	insert into entidades values (1,'AGUASCALIENTES');
+	insert into entidades values (11,'GUANAJUATO');
+	insert into entidades values (10,'DURANGO');
+	insert into entidades values (3,'BAJA CALIFORNIA SUR');
+	insert into entidades values (7,'CHIAPAS');
+	insert into entidades values (26,'SONORA');
+	insert into entidades values (21,'PUEBLA');
+	insert into entidades values (22,'QUERÉTARO');
+	insert into entidades values (32,'ZACATECAS');
+	nsert into entidades values (8,'CHIHUAHUA');
+	insert into entidades values (4,'CAMPECHE');
+
+3.- insert 3 10 municipios
+Sql:
+
+	
+	insert into municipios values (30,7,'chicomuselo');
+	insert into municipios values(11,32,'trinidad garcia de la cadena');
+	insert into municipios values(5,8,'ascension');
+	insert into municipios values(436,20,'santa marta texcatitlan');
+	insert into municipios values(368,20,'santa catarina minas');
+	insert into municipios values (123,21,'san felipe tepatlan');
+	insert into municipios values (12,14,'atenguillo');
+	insert into municipios values (10,22,'landa de matamoros');
+	insert into municipios values (77,21,'hueytlalpan');
+	insert into municipios values (201,21,'xochiltepec');
+    insert into municipios values (28,8,'guadalupe');
+    insert into municipios values (74,31,'tahmek');
+    insert into municipios values (8,12,'atenango del rio');
+    insert into municipios values (20,11,'leon');
+    
+4.- insert 5 tiposactividad
+Sql:
+    insert into tipoactividad values(522451,'Montepíos');
+    insert into tipoactividad values(523110,'Casas de bolsa');
+    insert into tipoactividad values(524110,'Compañías de seguros');
+    insert into tipoactividad values(525210,'Fondos de inversión');
+    insert into tipoactividad values(524220,'Administración de cajas de pensión y de seguros independientes');
+    insert into tipoactividad values(522460,'Sociedades financieras de objeto múltiple');
+    insert into tipoactividad values(523122,'Centros cambiarios');
+    insert into tipoactividad values(524120,'Fondos de aseguramiento campesino');
+    insert into tipoactividad values(522452,'Casas de empeño');
+    insert into tipoactividad values(524130,'Compañías afianzadoras');
+    insert into tipoactividad values(522110,'Banca múltiple');
+    insert into tipoactividad values(522390,'Otras instituciones de ahorro y préstamo');
+
+5.- insert 20 empresas
+Sql:
+    
+    insert into empresas values(1,1,1,524210,'AARCO AGENTE DE SEGUROS Y DE FIANZAS, S.A. DE C.V.',21.92478138,-102.3013062,'LUIS DONALDO COLOSIO',601,'JARDINES DE LA CONCEPCIÓN PRIMERA SECCIÓN',20120,'Aguascalientes','AGUASCALIENTES','MÉXICO');
+    insert into empresas values(2,1,1,524110,'ABA SEGUROS',21.92412446,-102.3140349,'LUIS DONALDO COLOSIO',1009,'LOMAS DEL CAMPESTRE',20129,'Aguascalientes','AGUASCALIENTES','MÉXICO');
+    insert into empresas values(3,1,1,525210,'ABC CAPITAL',21.86459038,-102.3052141,'REPÚBLICA MEXICANA',309,'JARDINES DE SANTA ELENA II',20238,'Aguascalientes','AGUASCALIENTES','MÉXICO');
+    insert into empresas values(4,1,1,524210,'ACM ASESORES',21.87328654,-102.3009553,'LAS AMÉRICAS',105,'LA FUENTE',20239,'Aguascalientes','AGUASCALIENTES','MÉXICO');
+    insert into empresas values(5,1,1,523110,'ACTINVER',21.91580607,-102.3052517,'AGUASCALIENTES NORTE',509,'BOSQUES DEL PRADO SUR',20130,'Aguascalientes','AGUASCALIENTES','MÉXICO');
+    insert into empresas values(6,1,7,523122,'ADA CENTRO CAMBIARIO',22.22914447,-102.321161,'MORELOS',121,'CENTRO',20400,R'incón de Romos','AGUASCALIENTES','MÉXICO');
+    insert into empresas values(7,1,1,524210,'ADS SEGUROS',21.91859638,-102.3342585,'EUGENIO GARZA SADA',166,'RINCÓN ANDALUZ',20329,'Aguascalientes','AGUASCALIENTES','MÉXICO');
+    insert into empresas values(8,4,3,522110,'BANAMEX',18.63760516,-91.83531287,24,0,'CENTRO',24100,'Carmen','CAMPECHE','MÉXICO');
+    insert into empresas values(9,4,3,522110,'ELEKTRA DINERO',18.97292234,-91.17917686,'MORELOS',0,'CENTRO',24300,'Carmen','CAMPECHE','MÉXICO');
+    insert into empresas values(10,6,2,522110,'BANCO',19.24103848,-103.7161857,'ALDAMA',552,'CENTRO',28000,'Colima','COLIMA','MÉXICO');
+    insert into empresas values(11,6,2,522110,'BANORTE',19.2313978,-103.7250188,'20 DE NOVIEMBRE',470,'LOS VIVEROS',28070,'Colima','COLIMA','MÉXICO');
+    insert into empresas values(12,7,68,522452,'PRENDA MEX',17.50982055,-93.11728351,'AURORA',0,'CENTRO',29520,'Pichucalco','CHIAPAS','MÉXICO');
+    insert into empresas values(13,7,97,522452,'TU EMPEÑO EFECTIVO',16.09075298,-93.75125859,'HIDALGO',0,'CENTRO',30500,'Tonalá,CHIAPAS','MÉXICO');
+    insert into empresas values(14,8,1,522110,'BANCO SANTANDER',30.6188968,-106.5137644,'GUERRERO',0,'CENTRO',32800,'Ahumada','CHIHUAHUA','MÉXICO');
+    insert into empresas values(15,8,17,522110,'PUNTO AZTECA',28.40244359,-106.8684095,'DÉCIMA',640,'CENTRO',31500,'Cuauhtémoc','CHIHUAHUA','MÉXICO');
+    insert into empresas values(16,11,2,522110,'BANCO SANTANDER',20.031299,-100.7210529,'HIDALGO',771,'CENTRO',38600,'Acámbaro','GUANAJUATO','MÉXICO');
+    insert into empresas values(17,14,63,522110,'BANCO BANORTE',20.34620064,-102.7743481,'HIDALGO',0,'CENTRO',47800,'Ocotlán','JALISCO,MÉXICO');
+    insert into empresas values(18,14,120,522452,'EMPEÑA FACIL',20.74582234,-103.3653989,'PÍPILA',97,'LA MARTINICA',45180,'Zapopan','JALISCO','MÉXICO');
+    insert into empresas values(19,14,18,523121,S'TERLING',20.2794992,-102.5485079,'HIDALGO',63,'CENTRO',47910,'La Barca','JALISCO','MÉXICO');
+    insert into empresas values(20,17,3,523122,'INTERMEX',18.5017405,-98.75453193,'JUÁREZ',0,'CENTRO',62950,'Axochiapan','MORELOS','MÉXICO');
+    insert into empresas values(21,21,114,522110,'CAJERO AUTOMÁTICO FAMSA',19.0397045,-98.1974203,'4 SUR',902,'CENTRO',72000,'Puebla','PUEBLA','MÉXICO');
+    insert into empresas values(22,21,114,522110,'CAJERO BANORTE',19.0453473,-98.20895489,'13 SUR',0,'CENTRO',72000,'Puebla','PUEBLA','MÉXICO');
+    insert into empresas values(23,21,114,522110,'HSBC',19.02154316,-98.1989023,'14 SUR',4516,'NINGUNO',72570,'Puebla','PUEBLA,MÉXICO');
+    insert into empresas values(24,25,12,522110,'BANCO AZTECA',23.2025447,-106.4218174,'MELCHOR OCAMPO',0,'CENTRO',82000,'Mazatlán','SINALOA','MÉXICO');
+    insert into empresas values(25,25,1,522452,'EMPEÑA FACIL',25.78749278,-108.989956,'INDEPENDENCIA',38,'CENTRO',81200,'Ahome','SINALOA','MÉXICO');
+    insert into empresas values(26,26,2,522110,'BANCOPPEL CALLE 13',31.32238009,-109.5528385,13,1000,'CENTRO',84200,'Agua Prieta','SONORA','MÉXICO');
+    insert into empresas values(27,26,29,522110,'CAJERO AUTOMÁTICO FAMSA',27.922624,-110.8948063,17,24,'CENTRO',85400,'Guaymas','SONORA','MÉXICO');
+        
+
+Querys
+
+6.- numero de entidades
+Sql:
+    
+    -select count(*) from entidades;
+    -select identidad,count(*) from entidades group by identidad;
+
+7.- numero de municipios por entidad
+Sql:
+
+    select identidad,count(*) from municipios group by identidad;
+
+8.- nombre entidad y nombre de sus municipios 
+Sql:
+    select  e.nombreentidad,m.nombremunicipio from entidades as e join municipios as m on e.identidad = m.idmunicipio order by e.nombreentidad,m.nombremunicipio asc;
+
+9.- numero de tipos de actividad que existen
+Sql:
+    select descripcion,count(*) from tipoactividad group by descripcion;
+    
+10.- nombre de municipios donde el nombre de su entidad contenga una A 
+Sql:
+
+    select  e.nombreentidad,m.nombremunicipio from entidades as e join municipios as m on e.identidad = m.identidad where e.nombreentidad like '%A%';
+
+11.- nombre del municipio, nombre de su empresa, latitud y longitud 
+Sql:
+    select m.nombremunicipio,em.nombreempresa,em.latitud,em.longitud from municipios as m join empresas as em on m.idmunicipio = em.idmunicipio  order by m.nombremunicipio asc;
+
+
+12.- numero de empresas por municipio
+Sql:
+
+    select idmunicipio, count(*) from empresas group by idmunicipio;
+
+13.- numero de empresas por entidad
+Sql:
+    select identidad,count (*) from empresas group by identidad;
+
+14.- numero de empresas por tipo de actividad
+Sql:
+
+    select codigoactividad,count (*) from empresas group by codigoactividad;
+
+15.- nombre de los municipios que tengan empresas cuyo nombre empiece con BANCO
+Sql:
+    select  m.nombremunicipio,em.nombreempresa from municipios as m join empresas as em on em.idmunicipio =m.idmunicipio where em.nombreempresa like 'BANCO%';
+
+16.- nombre de la entidad, nombre del municipio, nombre de la empresa y su código postal 
+Sql:
+    select em.estado,m.nombremunicipio,em.nombreempresa,em.codigopostal from empresas as em join municipios as m on m.idmunicipio = em.idmunicipio;
+    
+
+17.- nombre de la empresa, descripción de su tipo de actividad
+Sql:
+    
+    select em.nombreempresa,act.descripcion from empresas as em join tipoactividad as act on em.codigoactividad = act.codigoactividad;
+
+
+18.- nombre del municipio, nombre de la empresa, latitud, longitud, código de actividad y nombre de tipo de actividad 
+Sql:
+    select municipios.nombremunicipio,empresas.nombreempresa,empresas.latitud,empresas.longitud,empresas.codigoactividad,tipoactividad.descripcion from municipios,empresas,tipoactividad where municipios.idmunicipio = empresas.idmunicipio and (empresas.codigoactividad = tipoactividad.codigoactividad);
+    
+
+19.- nombre de la empresa, calle, numero, colonia ordenados por nombre
+    
+    select nombreempresa,calle,numero,colonia from empresas order by nombreempresa asc;
+
+20.- numero de empresas por entidad, ordenados por entidad, pero solo existen mas de 2 empresas por entidad
+    
+    select identidad,count(*) from empresas group by identidad having count(*)>2 order by identidad asc;
+
+
