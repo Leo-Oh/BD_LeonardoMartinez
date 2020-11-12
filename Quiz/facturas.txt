@@ -1,0 +1,136 @@
+FACTURAS quiz
+
+
+Diagrama:
+
+https://github.com/sergiojmnz/BD_SergioJimenez/blob/master/Caso%20facturas.pdf
+
+
+1.- create database leonardodmm_facturas
+Sql:	
+	create table cliente(idcliente int,rfc varchar (13),nombre varchar (60),apellidopat varchar (30),apellidomat varchar (30),calleyavenida varchar,estado varchar,codigopostal int ,ciudad varchar);
+
+	create table facturas(folio int,dia numeric(2) ,mes numeric(2),año numeric(4),concepto varchar,subtotal int,iva int,total int);
+		
+	ALTER TABLE CLIENTE ADD CONSTRAINT PK_IDCLIENTE PRIMARY KEY(idcliente);
+
+	ALTER TABLE FACTURAS ADD CONSTRAINT PK_IDFOLIO PRIMARY KEY(FOLIO);
+	
+	alter table facturas add column idcliente int;
+
+	alter table facturas add constraint fk_facturas_cliente foreign key (idcliente) references cliente(idcliente);
+
+	
+2.- insert 10 clientes
+Sql:
+	insert into cliente values (1, 'CETA7610219C9', 'adolfo', 'centeno', 'tellez', 'av 3', 'ver', '94300', 'mendoza');
+
+	insert into cliente values (2,'AXC33N4K2H41','AMANDA ','RAMIREZ','GARCIA','CALLE BENITO JUAREZ','VERACRUZ','94530','NARANJAL');
+	
+	insert into cliente value(3,'UZ4AY9YCHQC','LEONARDO DANIEL','MONTIEL','MARTINEZ','CALLE 8 AV 46','VERACRUZ','94517','CORDOBA');
+	
+	insert into cliente values(4,'SDFD45EF3','ARTURO','ZILLI','RIOS','CALZADA TLACOTENGO','VERACRUZ','94472','CORDOBA');
+	
+	insert into cliente values (5,'LU29S7F5N3VH','PEDRO','FLORES','RAMIREZ','PONIENTE 4','VERACRUZ','94520','ORIZABA');
+
+	
+	
+3.- insert 20 facturas
+Sql:
+
+	insert into facturas values (3,2,1,2020,'COMPRA XIAOMI S9',5239,500,5739,2);
+	insert into facturas values (4,5,6,2020,'COMPRA SSD 250GB',500,50,550,3);
+	INSERT INTO facturas values(5, 3, 5, 2020, 'COMPRA RAM', 3000, 800, 3800, 4);
+
+
+	
+
+Querys
+
+4.- numero de clientes
+Sql:
+
+select count(*) as numclientes from cliente;
+
+
+5.- numero de facturas emitidas
+Sql:
+
+select count(*) as numfact from facturas;
+
+
+8.- rfc, nombre, dirección ordenada por rfc y nombre 
+Sql:
+
+select rfc, nombre, calleyavenida from cliente order by rfc, nombre;
+
+9.- total facturado
+Sql:
+
+select sum(total) as totalfact from facturas;
+
+
+10.- total de iva
+Sql:
+
+select sum(iva) as totalfact from facturas;
+
+
+11.- factura de menor importe
+Sql:
+
+select min(total) from facturas;
+
+
+12.- factura de mayor importe
+Sql:
+
+select max(total) from facturas;
+
+
+
+13.- promedio del importe de facturacion
+Sql:
+
+select avg(total) as promediofact from facturas;
+
+
+14.- numero de facturas por cliente
+Sql:
+
+select idcliente, count(*) as numfact from facturas group by idcliente;
+
+
+15.- rfc, nombre del cliente, concepto y total de facturas
+Sql:
+
+select cliente.nombre, cliente.calleyavenida, facturas.concepto, facturas.total from cliente, facturas where cliente.idcliente = facturas.idcliente;
+
+
+16.- nombre de clientes con facturas mayores a 1000
+Sql:
+
+select nombre from cliente where idcliente in (select idcliente from facturas where total >1000);
+
+
+17.- rfc de clientes con facturas cuyo concepto contenga "COMPRA" y menores de 1000
+Sql:
+
+select rfc from cliente where idcliente in (select idcliente from facturas where concepto like '%COMPRA%' and total <1000);
+
+
+18.- sumatoria de subtotal, iva y total
+Sql:
+
+select sum(subtotal) as subtotal, sum(iva) as iva, sum(total) as total from facturas;
+
+
+19.- concepto, iva, subtotal y total de clientes cuyo RFC empiece con "C" ordenados por total y concepto 
+Sql:
+
+select concepto, subtotal, iva, total from facturas where idcliente in (select idcliente from cliente where rfc like 'C%') order by total, concepto;
+
+
+20.- numero de facturas por cliente, pero solo si existen mas de 3 facturas
+
+select idcliente, count(*) from facturas group by idcliente having count(*) >= 2
