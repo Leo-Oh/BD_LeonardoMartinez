@@ -1,0 +1,244 @@
+AMAZON model
+
+- Proveedores con codigo, nombre, rating
+- Productos con codigo, nombre, descripcion, precio, diasentrega, categoria[laptops, libros, juegos, juguetes, celulares], empresa de reparto [dhl, fedex, ups]
+- Clientes con codigo, usuario, password, nombre, direccion
+
+
+- Los clientes compran n productos (n productos pueden ser comprados por n clientes) - NOTA: tabla nueva llamada ventas, guardar también cantidad comprado, precio_venta, subtotal (precio X cantidad), iva, total y fecha_venta
+
+- Los proveedores surten n productos (un productos puede se surtido por n proveedores)
+NOTA: tabla nueva llamada compras, guardar también cantidad surtida, precio_compra, subtotal (precio X cantidad), iva, total y fecha_compra
+
+
+1.- create database leonardodmm_amazon
+Sql:
+
+	create table provedores (codigoprov int,nombre varchar(100),rating decimal(2,1));
+
+	create table cliente(codigocliente int,nombre varchar(60),apellidopat varchar(30),apellidomat varchar(30),password varchar(16),usuario varchar(35),codigopostal int,estado varchar(80),colonia varchar (50),calleyav varchar(150));
+
+	create table compras (codcompra int,codproducto int,codprovedor int,cantidadsurtida int,preciocompra float,subtotal float,iva float,total float,fechacompra TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP);
+
+	create table ventas (codventa int,codproducto int,codcliente int,cantidadcomprado int,precioventa float,subtotal float,iva float,total float,fechaventa TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP);
+
+	create table productos(codigoprod int,codcategoria int,codempresa int,nombre varchar(150),descripcion varchar,precio float,diasentrega TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP);
+
+	create table categoria(codcategoria int,descripcion varchar);
+
+	create table empresa_repartidora(codempresarep int,paqueteria varchar);
+
+	alter table provedores add constraint pk_codigoprov primary key(codigoprov);
+
+	alter table cliente add constraint pk_codigocliente primary key(codigocliente);
+
+	alter table compras add constraint pk_codcompra primary key (codcompra);
+
+	alter table ventas add constraint pk_codventa primary key (codventa);
+
+	alter table productos add constraint pk_codigoprod primary key (codigoprod);
+
+	alter table categoria add constraint pk_codcategoria primary key (codcategoria);
+
+	alter table empresa_repartidora add constraint pk_codempresarep primary key (codempresarep);
+
+	alter table compras add constraint fk_codproducto foreign key (codproducto) references productos (codigoprod);
+
+	alter table compras add constraint fk_codprovedor foreign key (codprovedor) references provedores (codigoprov);
+
+	alter table ventas add constraint fk_codproducto foreign key (codproducto) references productos (codigoprod);
+
+	alter table ventas add constraint fk_codcliente foreign key (codcliente) references cliente (codigocliente);
+
+	alter table productos add constraint fk_codcategoria foreign key (codcategoria) references categoria (codcategoria);
+
+	alter table productos add constraint fk_codempresa foreign key (codempresa) references empresa_repartidora (codempresarep);
+
+
+	insert into categoria values (1,'celulares');
+	insert into categoria values (2,'refrigeradores');
+	insert into categoria values (3,'estufas');
+	insert into categoria values (4,'televisiones');
+	insert into categoria values (5,'colchones y camas');
+
+	insert into empresa_repartidora values (1,'DHL');
+	insert into empresa_repartidora values (2,'ESTAFETA');
+	insert into empresa_repartidora values (3,'UPS');
+	insert into empresa_repartidora values (4,'FEDEX');
+	insert into empresa_repartidora values (5,'CORREOS DE MÉXICO');
+
+
+2.- insert 5 proveedores
+Sql:
+
+	insert into provedores values(1,'CELULADIA S.A',4);
+	insert into provedores values(2,'AliExpress',4.5);
+	insert into provedores values(3,'Tmart',4);
+	insert into provedores values(4,'NEDIS',4.3);
+	insert into provedores values(5,'BigBuy',3.5);
+
+3.- insert 10 productos
+Sql:
+	insert into productos values(1,1,1,'Xiaomi redmi note 8 pro','Inteligente y predictivo El sistema operativo avanzado Android 9.0 Pie aprende tus hábitos para adaptarse a tu rutina y lograr la máxima eficiencia de tu equipo',5799);
+
+	insert into productos values(2,1,1,'Xiaomi Redmi Note 9S 128 GB Azul','Equipado con una una memoria tan grande para almacenar todo lo que quieras, en combinación con poder, batería y un diseñoe legante. Con tu nuevo Xiaomi Redmi Note 9S conecta y comunícate con todos.',8499);
+
+	insert into productos values(3,2,2,'Refrigerador Mabe ','Gracias a sus 11 pies cúbicos de capacidad, anaqueles y parrillas de cristal templado, tus perecederos están siempre en orden y a la mano. Además, incluye huevera y charola para hielos',6799);
+
+	insert into productos values(4,2,2,'Refrigerador Mabe Top Mount RME1436XMXE de 14 Pies color Grafito','Arma tu cocina a la medida. Este refrigerador Mabe RME1436XMXE con capacidad de 14 pies cúbicos te ofrece gran espacio para almacenar los alimentos de la despensa familiar.',7599);
+
+	insert into productos values(5,3,3,'Estufa Mabe de Piso 30" EM7657CSIS0/1 color Plateado','¡Conviértete en la mejor cocinera con esta maravillosa estufa Mabe EM7657CSIS0! Sus seis quemadores y comal esmaltado son ideales para preparar diferentes alimentos.',6499);
+
+	insert into productos values(6,3,3,'Estufa Acros de Piso 30" AF5333B color Negro','Cocina como todo un profesional y dale un toque de amor a todos tus platillos. Con la nueva estufa Acros de 30" cocinas como todo un chef, pues además de contar con óptima tecnología, es muy funcional.',4999);
+
+	insert into productos values(7,4,4,'Pantalla LED Hisense 50" Ultra HD 4K Smart TV 50H6G','Una pantalla para garantizar entretenimiento o para que sea parte de la decoración. Tu decides. Esta fabulosa pantalla LED Hisense 50H6G está lista para ser parte de tu hogar.',7499);
+
+	insert into productos values(8,4,4,'Pantalla LED Hisense 32" HD Smart TV 32H4000GM','Tus series favoritas de Netflix se ven y escuchan mejor en la pantalla Hisense 32H4000GM. Incorpora el sistema operativo Roku TV con el que tienes acceso a más de 5 mil canales con más de 100 mil contenidos en línea.',3899);
+
+	insert into productos values(9,5,5,'Colchón Matrimonial América Roma','Luego de llevar a cabo todas tus actividades del día, tu cuerpo merece ser consentido por un buen colchón América.',3299);
+
+	insert into productos values(10,5,5,'Juego de Colchón y Box Matrimonial America 135-510 Roma','Te mereces el mejor descanso, y el juego de colchón y box matrimonial marca America, puede dártelo.',4899);
+
+
+
+4.- insert 5 clientes
+
+	insert into cliente values(1,'LEONARDO DANIEL','MONTIEL','MARTINEZ','qwerty9191','xDaniel07','94517','Veracruz','Los Carriles','Calle 8 Avenida 46');
+
+	insert into cliente values(2,'AMANDA','RAMIREZ','GARCIA','amandagar123','MandyRG01','16533','Ciudad de México','Fuentes','calle ahualapa');
+
+	insert into cliente values(3,'KARLA ELIZABETH','ARGUELLES','GAMEZ','gamezarguelles','karlaAG23','94510','Veracruz','Toxpan','Calle 12 Avendida 16');
+
+	insert into cliente values(4,'ISRAEL','ALVARADO','PALACIOS','alvaradoisrael','israelAlv',20029,'Washington D.C.','LOGAN CIRCLE','14th ST NW ,M ST NW');
+
+	insert into cliente values(5,'JOSÉ WUENCESLAO','ALVARADO','LOPEZ','josewc55','wuences055','27010','Carolina del norte','Bethania','main st y bethania rural hall rd');
+
+
+5.- insert 10 ventas
+
+	insert into ventas values (1,1,1,3,5000,1500,350,1850);
+
+	insert into ventas values (2,3,1,1,6500,6500,450,6950);
+
+	insert into ventas values (3,4,2,2,4500,9000,500,9500);
+
+	insert into ventas values (4,5,3,3,3500,10500,550,11550);
+
+	insert into ventas values (5,2,4,4,2000,8000,450,8450);
+
+	insert into ventas values (6,3,4,3,1600,4800,250,5050);
+
+	insert into ventas values (7,1,5,4,3800,15200,160,15360);
+
+	insert into ventas values (8,10,5,2,4899,9798,180,9978);
+
+	insert into ventas values(9,9,2,5,3299,16495,690,17185);
+
+	nsert into ventas values(10,8,3,3,1000,3000,120,3120);
+
+
+6.- insert 10 compras
+	
+	insert into compras values (1,1,1,100,6000,600000,1500,601500);
+	
+	insert into compras values (2,2,3,50,3500,175000,2500,177500);
+
+	insert into compras values(3,3,2,80,4500,360000,3600,363600);
+
+	insert into compras values(4,4,4,60,3780,226800,2460,229260);
+
+	insert into compras values (5,9,1,10,600,60000,1500,601500);
+	
+	insert into compras values (7,10,3,50,1000,50000,2500,52500);
+
+	insert into compras values(8,8,4,80,450,36000,360,36360);
+
+	insert into compras values(9,7,5,60,378,22680,246,22926);
+
+	insert into compras values(10,6,1,33,5600,184800,4560,189360);
+
+
+Querys
+
+7.- total de clientes cuyo nombre contenga una A
+Sql:
+
+select * from cliente where nombre like '%D%';
+
+
+8.- total de ventas de productos con precio > 500
+Sql:
+
+select sum(total) from ventas where precioventa > 5000;
+
+
+9.- total de iva en las ventas de productos con precio menor a 200 y que contenga la frase "LAP"
+Sql:
+
+select sum(iva) from ventas where precioventa < 5000 and codproducto in (select codigoprod from productos where nombre like '%Estufa%');
+
+
+
+10.- venta de menor importe para productos con iva = 0
+Sql:
+
+select min(iva) from ventas where iva>10;
+
+
+11.- total de compras realizadas a proveedores de la empresa
+Sql:
+
+select sum(total) from compras;
+
+
+12.- promedio del importe de ventas del mes actual
+Sql:
+
+select avg(total) from ventas where extract(MONTH from fechaventa)=11;
+
+13.- numero de compras del periodo fiscal actual (1/ene2020 a 31/dic/2020)
+Sql:
+
+select count(*) from compras where extract(YEAR from fechacompra)=2020;
+
+
+14.- nombre del cliente, dirección, código producto comprado, cantidad, precio_venta, iva, importe y total
+Sql:
+
+select nombre, apellidopat, apellidomat, calleyav, codproducto, cantidadcomprado, precioventa, iva, total from ventas, cliente where ventas.codcliente = cliente.codigocliente;
+
+15.- nombre del proveedor, rating, código producto surtido, cantidad, precio_compra, iva, importe y total
+Sql:
+select nombre, rating, codproducto, cantidadsurtida, preciocompra, iva, total from compras, provedores where compras.codprovedor = provedores.codigoprov;
+
+
+16.- nombre de clientes con facturas mayores a 1000 del mes actual
+Sql:
+
+select nombre from cliente where codigocliente in (select codcliente from ventas where total > 10000 and extract(MONTH from fechaventa)=11);
+
+
+17.- sumatoria de subtotal, iva y total de ventas del primer semestre del periodo fiscal
+Sql:
+
+select sum(subtotal), sum(iva), sum(total) from ventas where extract(QUARTER from fechaventa)=4 and extract(YEAR from fechaventa)=2020;
+
+
+18.- sumatoria de subtotal, iva y total de compras del primer trimestre del periodo fiscal
+Sql:
+
+select sum(subtotal), sum(iva), sum(total) from compras where extract(QUARTER from fechacompra)=4 and extract(YEAR from fechacompra)=2020;
+
+
+19.- numero de compras por proveedor
+Sql:
+
+select codprovedor, count(*) from compras group by codprovedor;
+
+
+20.- numero de ventas por cliente, pero solo si existen mas de 3 facturas
+
+select codcliente, count(*) from ventas group by codcliente having count(*) > 1;
+
+
+
